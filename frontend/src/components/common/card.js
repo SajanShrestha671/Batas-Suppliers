@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import Rating from './rating';
 
 const Product = ({ product }) => {
 	return (
 		<div>
 			<Card className="my-3 p-3 rounded">
-				<a href={`/product/${product._id}`}>
+				<LinkContainer to={`/product/${product.id}`}>
 					<Card.Img variant="top" src={product.image} />
-				</a>
+				</LinkContainer>
 				<Card.Body>
-					<a href={`/product/${product._id}`}>
+					<LinkContainer to={`/product/${product.id}`}>
 						<Card.Title as='div' className='product-title'>
 							<strong>{product.name}</strong>
 						</Card.Title>
-					</a>
+					</LinkContainer>
 
 					<Card.Text as='div'>
 						<Rating
 							value={product.rating}
 							text={`${product.numReviews} reviews`}
-							color={'#f8e825'}
 						/>
 					</Card.Text>
 
@@ -34,7 +34,7 @@ const Product = ({ product }) => {
 
 Product.propTypes = {
 	product: PropTypes.shape({
-		_id: PropTypes.string.isRequired,
+		id: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
 		image: PropTypes.string.isRequired,
 		rating: PropTypes.number.isRequired,
