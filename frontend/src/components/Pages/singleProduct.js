@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import Rating from '../common/rating';
-import products from '../../product';
+import axios from 'axios';
 
-const SingleProductPage = () => {
-  const { _id } = useParams();
-  const product = products.find((p) => p.id === _id);
+const SingleProductPage = ({ match }) => {
+  const { id } = useParams(); // Use useParams hook to get id directly
+  const [product, setProduct] = useState(null);
 
-  // Fallback UI for when the product is not found
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const { data } = await axios.get(`/api/products/${id}`);
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
   if (!product) {
     return (
       <div>
