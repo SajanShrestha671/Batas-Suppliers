@@ -1,0 +1,14 @@
+{
+  "name": "batas-suppliers",
+  "version": "1.0.0",
+  "description": "Backend for Batas Sippliers",
+  "main": "index.js",
+  "scripts": {
+    "start": "node Backend/index"
+  },
+  "author": "Sajan Shrestha",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
