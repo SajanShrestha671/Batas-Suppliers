@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import Rating from '../common/rating';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { listProductDetails } from '../../actions/productActions';
+import Loader from '../common/loader';
+import Message from '../common/message';
 
-const SingleProductPage = ({ match }) => {
+const SingleProductPage = () => {
   const { id } = useParams(); // Use useParams hook to get id directly
-  const [product, setProduct] = useState(null);
+  const dispatch = useDispatch();
+
+  const productDetails = useSelector(state => state.productDetails);
+  const { loading,error, product } = productDetails;
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const { data } = await axios.get(`/api/products/${id}`);
-        setProduct(data);
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      }
-    };
+    dispatch( listProductDetails (id));
+  }, [dispatch, id]);
 
-    fetchProduct();
-  }, [id]);
-
+  if (loading) {
+    return <Loader />;
+  }
   if (!product) {
     return (
       <div>
@@ -32,7 +32,13 @@ const SingleProductPage = ({ match }) => {
 
   return (
     <div>
-      <Row>
+      { loading ? (
+                <Loader />
+            ) : error ? (
+                <Message variant = 'danger'>{error}</Message>
+            ) : (
+                <div>
+                  <Row>
         {/* Product Image */}
         <Col md={6}>
           <Image src={product.image} alt={product.name} />
@@ -81,6 +87,9 @@ const SingleProductPage = ({ match }) => {
           </Card>
         </Col>
       </Row>
+                    
+    </div>
+  )} 
     </div>
   );
 };
