@@ -5,6 +5,7 @@ import productRoutes from './routes/productRoutes.js';
 import bcrypt from 'bcrypt';
 import User from './model/userModel.js';
 import jwt from 'jsonwebtoken';
+import authMiddleware from './middleware/authMiddleware.js';
 
 dotenv.config();
 
@@ -77,7 +78,9 @@ app.post("/login", async (request, response) => {
       });
     }
   });
-  
+  app.get("/auth-endpoint", authMiddleware, (request, response) => {
+  response.json({ message: "You are authorized to access me" });
+});
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
