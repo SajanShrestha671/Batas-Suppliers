@@ -6,6 +6,8 @@ import Footer from "./components/footer";
 import HomePage from "./components/Pages/homepage";
 import SingleProductPage from "./components/Pages/singleProduct";
 import CartPage from "./components/Pages/cartPage";
+import LoginPage from "./components/Pages/loginPage";
+import RegisterPage from "./components/Pages/RegisterPage";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/products/:id" element={<SingleProductPage />} />
               <Route path="/cart/:id?" element={<CartPage />} />
+              <Route path="/login" element={< LoginPage />} />
+              <Route path="/register" element={< RegisterPage />} />
             </Routes>
           </Container>
         </main>
